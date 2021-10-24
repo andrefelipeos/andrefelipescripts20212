@@ -1,4 +1,5 @@
 #!/bin/bash
+# Correção: 2,0
 # 1. mensagens que não são do sshd
 grep -v "sshd" /home/compartilhado/auth.log
 
