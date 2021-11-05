@@ -4,14 +4,22 @@ arquivo="agenda.db"
 
 comando=${1}
 
-if [ ${comando} == "adicionar" ]
+
+if [ ${comando} = "adicionar" ]
 then
     nome=${2}
     email=${3}
 
     if [ ! -f ${arquivo} ]
     then
+        touch ${arquivo}
         echo "Arquivo criado!!!"
+    else
+        if [ $(grep ":${email}$" ${arquivo} | wc -l) -gt 0 ]
+        then
+            echo "E-mail já cadastrado!!!"
+	    exit 2
+        fi
     fi
 
     echo "${nome}:${email}" >> ${arquivo}
@@ -19,19 +27,22 @@ then
 fi
 
 
-if [ ${comando} == "listar" ]
+if [ ${comando} = "listar" ]
 then
     if [ ! -f ${arquivo} ]
     then
+        echo "Arquivo não existe!!!"
+	exit 1
+    elif [ ! -s ${arquivo} ]
+    then
         echo "Arquivo vazio!!!"
-	exit 2
     fi
 
     cat ${arquivo}
 fi
 
 
-if [ ${comando} == "remover" ]
+if [ ${comando} = "remover" ]
 then
     email=${2}
 
@@ -45,4 +56,10 @@ then
 
     sed -i /":${email}$"/d ${arquivo}
     echo "Usuário ${nome} removido."
+
+    if [ ! -s ${arquivo} ]
+    then
+        rm ${arquivo}
+        echo "Arquivo vazio removido."
+    fi
 fi
