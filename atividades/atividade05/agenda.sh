@@ -46,6 +46,12 @@ if [ ${comando} = "remover" ]
 then
     email=${2}
 
+    if [ ! -f ${arquivo} ]
+    then
+        echo "Arquivo não existe!!!"
+	exit 1
+    fi
+
     if [ $(grep ":${email}$" ${arquivo} | wc -l) -eq 0 ]
     then
         echo "E-mail não cadastrado."
