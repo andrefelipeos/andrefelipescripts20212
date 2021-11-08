@@ -1,4 +1,5 @@
 #!/bin/bash
+# Correção: 1,5
 
 arquivo="agenda.db"
 
