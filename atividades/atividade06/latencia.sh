@@ -1,4 +1,5 @@
 #!/bin/bash
+# Correção: 1,0
 
 ARQUIVO=${1}
 TEMP="medias_ping"
