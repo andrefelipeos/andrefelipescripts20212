@@ -11,16 +11,25 @@ then
     rm ${LOG}
 fi
 
-$(ls ${diretorio} > ${TMP})
+ls ${diretorio} > ${TMP}
+qtd=$(wc -l ${TMP} | cut -d" " -f1)
 
 while true
 do
     sleep ${intervalo}
 
-    if [ $(ls ${diretorio} | wc -l) -ne $(wc -l ${TMP} | cut -d" " -f1) ]
+    qtd_atual=$(ls ${diretorio} | wc -l)
+
+    if [ ${qtd} -ne ${qtd_atual} ]
     then
-	echo "[$(date +"%d-%m-%y %H:%M:%S")] Alteração! $(wc -l ${TMP} | cut -d" " -f1)->$(ls ${diretorio} | wc -l)." >> ${LOG}
-	echo $(cat ${TMP})
-	$(ls ${diretorio} > ${TMP})
+	horario="[$(date +"%d-%m-%y %H:%M:%S")]"
+	alteracao="Alteração! ${qtd}->${qtd_atual}."
+
+	echo $(ls ${diretorio} | diff ${TMP} - | grep ">" | cut -d" " -f2) > .inseridos
+	echo $(ls ${diretorio} | diff ${TMP} - | grep "<" | cut -d" " -f2) > .removidos
+
+	echo "${horario} ${alteracao} Adicionados: $(cat .inseridos) | Removidos: $(cat .removidos)" >> ${LOG}
+	ls ${diretorio} > ${TMP}
+	qtd=${qtd_atual}
     fi
 done
