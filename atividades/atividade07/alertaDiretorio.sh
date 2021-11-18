@@ -28,7 +28,7 @@ do
 	echo $(ls ${diretorio} | diff ${TMP} - | grep ">" | cut -d" " -f2) > .inseridos
 	echo $(ls ${diretorio} | diff ${TMP} - | grep "<" | cut -d" " -f2) > .removidos
 
-	echo "${horario} ${alteracao} Adicionados: $(cat .inseridos) | Removidos: $(cat .removidos)" >> ${LOG}
+	echo "${horario} ${alteracao} Adicionados: $(cat .inseridos) | Removidos: $(cat .removidos)" | tee -a ${LOG}
 	ls ${diretorio} > ${TMP}
 	qtd=${qtd_atual}
     fi
