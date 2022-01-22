@@ -1,0 +1,21 @@
+#!/bin/bash
+
+amazon-linux-extras install -y nginx1
+
+mkdir /data/ && mkdir /data/html
+echo '<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Atividade 12</title>
+	</head>
+	<body>
+		<h1>André Felipe de Oliveira Sousa</h1>
+		<h2>510334</h2>
+	</body>
+</html>' > /data/html/index.html
+
+sed -i "s/\/usr\/share\/nginx\/html;/\/data\/html;/" /etc/nginx/nginx.conf
+
+nginx
