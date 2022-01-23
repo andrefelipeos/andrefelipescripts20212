@@ -48,7 +48,6 @@ EOF
 
 sed -i "s/\/usr\/share\/nginx\/html;/\/data\/html;/" /etc/nginx/nginx.conf
 
-nginx
 systemctl start nginx.service
 systemctl enable nginx.service
 
