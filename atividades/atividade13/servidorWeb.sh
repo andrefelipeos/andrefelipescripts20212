@@ -9,7 +9,7 @@ aws ec2 authorize-security-group-ingress --group-id ${SECGROUP} --protocol tcp -
 
 INSTANCE=$(aws ec2 run-instances --image-id ${IMAGEID} --security-group-ids ${SECGROUP} --key-name ${KEYNAME} --instance-type t2.micro --user-data file://user_data --query "Instances[0].InstanceId" --output text)
 
-echo "Criando servidor..."
+echo "Criando servidor de Monitoramento..."
 
 while [ _running != _$(aws ec2 describe-instance-status --instance-ids ${INSTANCE} --query "InstanceStatuses[].InstanceState.Name" --output text) ]
 do

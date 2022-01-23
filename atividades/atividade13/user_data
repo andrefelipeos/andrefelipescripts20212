@@ -3,19 +3,78 @@
 amazon-linux-extras install -y nginx1
 
 mkdir /data/ && mkdir /data/html
-echo '<!DOCTYPE html>
+cat << EOF > /data/html/index.html
+<!DOCTYPE html>
 
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Atividade 12</title>
+		<title>Atividade 13</title>
 	</head>
 	<body>
-		<h1>André Felipe de Oliveira Sousa</h1>
-		<h2>510334</h2>
+		<table>
+			<tr>
+				<td>Horário da última atualização</td>
+				<td id="time"></td>
+			</tr>
+			<tr>
+				<td>Tempo de atividade</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Carga média do último minuto</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Carga média dos últimos cinco minutos</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Carga média dos últimos quize minutos</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Memória livre</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Memória ocupada</td>
+				<td></td>
+			</tr>
+		</table>
 	</body>
-</html>' > /data/html/index.html
+</html>
+EOF
 
 sed -i "s/\/usr\/share\/nginx\/html;/\/data\/html;/" /etc/nginx/nginx.conf
 
 nginx
+systemctl enable nginx.service
+
+cat << EOF > /usr/local/bin/atualiza_index.sh
+#!/bin/bash
+
+while true
+do
+	sed -i "s/<td id=\"time\">.*<\/td>/<td id=\"time\">\$(date)<\/td>/" /data/html/index.html
+	sleep 5
+done
+EOF
+
+cat << EOF > /etc/systemd/system/atualiza-index.service
+[Unit]
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/atualiza_index.sh
+
+[Install]
+WantedBy=default.target
+EOF
+
+chmod 744 /usr/local/bin/atualiza_index.sh
+chmod 664 /etc/systemd/system/atualiza-index.service
+
+systemctl daemon-reload
+systemctl start atualiza-index.service
+systemctl enable atualiza-index.service
