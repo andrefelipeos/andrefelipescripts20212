@@ -7,7 +7,7 @@ SECGROUP=$(aws ec2 create-security-group --group-name andre510334 --description 
 aws ec2 authorize-security-group-ingress --group-id ${SECGROUP} --protocol tcp --port 22 --cidr 0.0.0.0/0 > /dev/null
 aws ec2 authorize-security-group-ingress --group-id ${SECGROUP} --protocol tcp --port 80 --cidr 0.0.0.0/0 > /dev/null
 
-INSTANCE=$(aws ec2 run-instances --image-id ${IMAGEID} --security-group-ids ${SECGROUP} --key-name ${KEYNAME} --instance-type t2.micro --user-data file://user_data --query "Instances[0].InstanceId" --output text)
+INSTANCE=$(aws ec2 run-instances --image-id ${IMAGEID} --security-group-ids ${SECGROUP} --key-name ${KEYNAME} --instance-type t2.micro --user-data file://user_data.sh --query "Instances[0].InstanceId" --output text)
 echo "Criando servidor de Monitoramento em CRON..."
 
 while [ _running != _$(aws ec2 describe-instance-status --instance-ids ${INSTANCE} --query "InstanceStatuses[].InstanceState.Name" --output text) ]
