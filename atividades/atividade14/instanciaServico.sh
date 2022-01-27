@@ -1,4 +1,5 @@
 #!/bin/bash
+# Correção: 2,0
 
 KEYNAME=${1}
 IMAGEID=ami-08e4e35cccc6189f4
