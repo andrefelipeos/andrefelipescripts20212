@@ -1,4 +1,5 @@
 #!/bin/bash
+# Correção: 2,0. Deixar o arquivo chamado apenas "user_data" não é uma boa prática. Aprenda a organizar com as extensões corretas.
 
 KEYNAME=${1}
 IMAGEID=ami-08e4e35cccc6189f4
