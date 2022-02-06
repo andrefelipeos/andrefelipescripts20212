@@ -26,9 +26,10 @@ systemctl enable mariadb.service
 
 
 # criar banco, tabela e usuario
-mysql << EOF 2> /root/erros
+mysql << EOF 2> /root/errors_mariadb_config.log
 CREATE DATABASE scripts;
 CREATE USER '${DBUSER}'@'%' IDENTIFIED BY '${DBPASSWORD}';
 GRANT ALL PRIVILEGES ON scripts.* TO '${DBUSER}'@'%';
+USE scripts;
 CREATE TABLE teste01 ( campo INT );
 EOF
