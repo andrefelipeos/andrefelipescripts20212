@@ -30,3 +30,27 @@ done
 
 IP_DBSERVER=$(aws ec2 describe-instances --instance-ids ${ID_INSTANCE_1} --query "Reservations[].Instances[].PrivateIpAddress" --output text)
 echo "IP Privado do Banco de Dados: ${IP_DBSERVER}"
+
+
+
+
+
+
+
+sed -i "s/^DBUSER=/DBUSER=${DBUSER}/" user_data_2.sh
+sed -i "s/^DBPASSWORD=/DBPASSWORD=${DBPASSWORD}/" user_data_2.sh
+sed -i "s/^IP_DBSERVER=/IP_DBSERVER=${IP_DBSERVER}/" user_data_2.sh
+
+
+
+ID_INSTANCE_2=$(aws ec2 run-instances --image-id ${ID_IMAGE} --security-group-ids ${ID_SECGROUP} --key-name ${KEYNAME} --instance-type t2.micro --user-data file://user_data_2.sh --query "Instances[0].InstanceId" --output text)
+echo "Criando servidor de Aplicação..."
+
+while [ _running != _$(aws ec2 describe-instance-status --instance-ids ${ID_INSTANCE_2} --query "InstanceStatuses[].InstanceState.Name" --output text) ]
+do
+        sleep 5
+done
+
+IP_DBCLIENT=$(aws ec2 describe-instances --instance-ids ${ID_INSTANCE_2} --query "Reservations[].Instances[].PublicIpAddress" --output text)
+
+echo "IP Público do Servidor de Aplicação: ${IP_DBCLIENT}"
