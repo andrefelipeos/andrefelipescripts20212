@@ -1,5 +1,7 @@
 #!/bin/bash
-
+# Correção: 1,5. Não cria a tabela. A razao pode ser que além de esperar a instância entrar no estado "running", seria prudente colocar para esperar mais alguns segundos enquanto
+# instala o banco de dados. Pode ocorrer da segunda instância tentar conectar e o banco da primeira ainda não estar pronto. Tente usar "aws ec2 wait instance-status-ok --instance-ids"
+# para esperar a primeira instância.
 ID_IMAGE=ami-08e4e35cccc6189f4
 
 KEYNAME=${1}

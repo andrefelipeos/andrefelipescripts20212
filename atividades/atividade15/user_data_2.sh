@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # devem ser modificadas pelo script principal!
-DBUSER=
-DBPASSWORD=
-IP_DBSERVER=
+DBUSER=joaomarcelo
+DBPASSWORD=1566scripts
+IP_DBSERVER=172.31.90.245
 
 
 # instala o cliente mariadb

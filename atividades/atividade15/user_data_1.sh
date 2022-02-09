@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # devem ser modificadas pelo script principal!
-DBUSER=
-DBPASSWORD=
+DBUSER=joaomarcelo
+DBPASSWORD=1566scripts
 
 
 # instala, inicia e habilita o mariadb
