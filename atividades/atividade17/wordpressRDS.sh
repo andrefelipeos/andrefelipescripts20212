@@ -1,4 +1,6 @@
 #!/bin/bash
+# Correção: 0,5
+. Como você mencionou, não estão funcionando. Mas pelo menos você tentou colocar o comando de criação do RDS, que parece que ia no caminho certo..
 
 DBUSER=${1}
 DBPASSWORD=${2}
