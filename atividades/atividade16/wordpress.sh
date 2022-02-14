@@ -1,4 +1,5 @@
 #!/bin/bash
+# Correção: 0,5. Como você mencionou, não estão funcionando. Mas pelo menos você tentou colocar os comandos de instalação do Wordpress. Irei considerar a presença.
 
 ID_IMAGE=ami-08e4e35cccc6189f4
 
